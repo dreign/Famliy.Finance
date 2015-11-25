@@ -1,0 +1,126 @@
+﻿@using Famliy.Finance.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Famliy.Finance.Models.sys_log>
+@{
+    ViewBag.Title = "系统日志";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header">
+            <div class="header bordered-sky">
+                系统日志
+            </div>
+            @using (Html.BeginForm("Index", "sys_log", FormMethod.Get, new { @class = "form-inline" }))
+            {
+                <p>
+                    日志:
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @Style = "display:inline" })
+                    <button type="submit" class="btn btn-blue">查询</button>
+                </p>
+            }
+
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.log_name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.user_id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.user_name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.interface_name)
+                    </th>                   
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.local_ip)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.visitor_ip)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.result)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.interface_status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.request_time)
+                    </th>                   
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.execute_time)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.mem)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.create_date)
+                    </th>                   
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.log_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.user_id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.user_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.interface_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.local_ip)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.visitor_ip)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.result)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.interface_status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.request_time)
+                        </td>                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.execute_time)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.mem)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.create_date)
+                        </td>                       
+                        <td>
+                            @Html.ActionLink("详细", "Details", new { id = item.id }) |
+                            @Html.ActionLink("删除", "Delete", new { id = item.id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <div class="row padding-10">
+                <div class="col-sm-6">
+                    <div class="dataTables_info">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="dataTables_paginate paging_bootstrap pull-right">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

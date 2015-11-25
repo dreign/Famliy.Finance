@@ -1,0 +1,289 @@
+﻿@using Famliy.Finance.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Famliy.Finance.Models.bank_operate_log>
+@{
+    ViewBag.Title = "我的账户";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bank_account account = ViewData["bank_account"] as bank_account;
+    sys_user user = ViewData["sys_user"] as sys_user;
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="profile-container">
+            <div class="profile-header row">
+                <div class="col-lg-2 col-md-4 col-sm-12 text-center">
+                    <a href="/sys_user/Details/@user.user_id">
+                        <img src="~/Content/img/child-128.png" alt="" class="header-avatar">
+                    </a>
+                </div>
+                <div class="col-lg-5 col-md-8 col-sm-12 profile-info">
+                    <div>@user.nick_name</div>
+                    <div class="header-fullname">@account.user_name</div>
+                    <a href="#" class="btn btn-palegreen btn-sm  btn-follow">
+                        <i class="fa fa-check"></i>
+                        @user.family_name
+                    </a>
+                    <div class="header-information">
+                        @user.remark
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 profile-stats">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
+                            <div class="stats-value pink">@account.money.ToString("C3")</div>
+                            <div class="stats-title">账户余额</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                            <i class="glyphicon glyphicon-map-marker"></i> @user.address
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                            电话: <strong>@user.phone</strong>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                            年龄: <strong>@user.age</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-body">
+                <div class="col-lg-12">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs tabs-flat  nav-justified" id="myTab11">
+                            <li class="active">
+                                <a data-toggle="tab" href="#overview">
+                                    交易明细
+                                </a>
+                            </li>
+                            <li class="tab-red">
+                                <a data-toggle="tab" href="#settings">
+                                    个人资料
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content tabs-flat">
+                            <div id="overview" class="tab-pane active">
+                                <div class="row profile-overview">
+                                    <div class="col-md-12">
+                                        <h6 class="row-title before-themeprimary no-margin-top">交易明细</h6>
+                                        @using (Html.BeginForm("Index", "Person", FormMethod.Get, new { @class = "form-inline" }))
+                                        {
+                                            <p>
+                                                科目:
+                                                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @Style = "display:inline" })
+                                                <button type="submit" class="btn btn-blue">查询</button>
+                                            </p>
+                                        }
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
+                                            <thead class="bordered-blue">
+                                                <tr>
+                                                    <th>
+                                                        @Html.DisplayName("用户名")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("账户余额")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("科目")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("备注")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("日期")
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @item.user_name
+                                                        </td>
+                                                        <td>
+                                                            @item.money.ToString("0.00")
+                                                        </td>
+                                                        <td>
+                                                            @item.subject_remark
+                                                        </td>
+                                                        <td>
+                                                            @item.remark
+                                                        </td>
+                                                        <td>
+                                                            @item.create_date.Value.ToString("yyyy-MM-dd hh:mm:ss")
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <div class="row padding-10">
+                                            <div class="col-sm-6">
+                                                <div class="dataTables_info">
+                                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="dataTables_paginate paging_bootstrap pull-right">
+                                                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="settings" class="tab-pane">
+                                <div class="row profile-overview">
+                                    <div class="col-md-12">
+                                        <h6 class="row-title before-red no-margin-top">个人资料</h6>
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                用户Id
+                                            </dt>
+                                            <dd>
+                                                @user.user_id
+                                            </dd>
+                                            <dt>
+                                                昵称
+                                            </dt>
+                                            <dd>
+                                                @user.nick_name
+                                            </dd>
+                                            <dt>
+                                                家庭角色
+                                            </dt>
+                                            <dd>
+                                                @user.family_name
+                                            </dd>
+                                            <dt>
+                                                性别
+                                            </dt>
+                                            <dd>
+                                                @user.IsMale()
+                                            </dd>
+                                            <dt>
+                                                年龄
+                                            </dt>
+                                            <dd>
+                                                @user.age
+                                            </dd>
+                                            <dt>
+                                                生日
+                                            </dt>
+                                            <dd>
+                                                @user.birthday.Value
+                                            </dd>
+                                            <dt>
+                                                地址
+                                            </dt>
+                                            <dd>
+                                                @user.address
+                                            </dd>
+                                            <dt>
+                                                邮编
+                                            </dt>
+                                            <dd>
+                                                @user.post
+                                            </dd>
+                                            <dt>
+                                                电话
+                                            </dt>
+                                            <dd>
+                                                @user.phone
+                                            </dd>
+                                            <dt>
+                                                邮箱
+                                            </dt>
+                                            <dd>
+                                                @user.email
+                                            </dd>
+                                            <dt>
+                                                QQ
+                                            </dt>
+                                            <dd>
+                                                @user.qq
+                                            </dd>
+                                            <dt>
+                                                微信
+                                            </dt>
+                                            <dd>
+                                                @user.weixin
+                                            </dd>
+
+                                            <dt>
+                                                兴趣
+                                            </dt>
+
+                                            <dd>
+                                                @user.interest
+                                            </dd>
+
+                                            <dt>
+                                                签名
+                                            </dt>
+
+                                            <dd>
+                                                @user.remark
+                                            </dd>
+
+                                            <dt>
+                                                最新登录时间
+                                            </dt>
+
+                                            <dd>
+                                                @user.last_login_time
+                                            </dd>
+
+                                            <dt>
+                                                最近登录IP
+                                            </dt>
+
+                                            <dd>
+                                                @user.last_login_ip
+                                            </dd>
+                                            <dt>
+                                                备注
+                                            </dt>
+
+                                            <dd>
+                                                @user.user_desc
+                                            </dd>
+                                            <dt>
+                                                创建时间
+                                            </dt>
+
+                                            <dd>
+                                                @user.create_date
+                                            </dd>
+
+                                            <dt>
+                                                修改时间
+                                            </dt>
+
+                                            <dd>
+                                                @user.modify_date
+                                            </dd>
+
+                                            <dt>
+                                                状态
+                                            </dt>
+
+                                            <dd>
+                                                @user.status
+                                            </dd>
+
+                                        </dl>
+                                        <div class="pull-right">
+                                            <a href="~/sys_user/Edit/@user.user_id" class="btn btn-primary">编辑</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

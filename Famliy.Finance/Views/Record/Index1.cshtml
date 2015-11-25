@@ -1,0 +1,50 @@
+﻿@using Famliy.Finance.Models
+
+@{
+    ViewBag.Title = "记账";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header">
+            <div class="header bordered-sky">
+                记账
+            </div>
+            <div class="login-container animated fadeInDown">
+                @using (Html.BeginForm("Index", "Record", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user darkorange"></i></span>
+                            @Html.TextBox("UserName", ViewBag.UserName as string, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>金额</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">￥</span>
+                            @Html.TextBox("Money", ViewBag.UserName as string, new { @class = "spinner-input form-control"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span>财务科目:</span>
+                        <select id="e1" style="width:100%;">
+                            <option value="AL">
+                                水电煤
+                            </option>
+                            <option value="AK">
+                                Alaska
+                            </option>
+                            <option value="AZ">
+                                Arizona
+                            </option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-blue">确定</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

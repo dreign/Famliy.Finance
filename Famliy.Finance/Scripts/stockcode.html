@@ -1,0 +1,31 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <link href="../Content/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="search">
+        <div class="inputbox">
+        <input type="text" class="inputText searchtext ui-autocomplete-input" id="searchtext" value="股票名称或代码" autocomplete="off" style="color: rgb(93, 93, 93);">
+        <span role="status" aria-live="polite" class="ui-helper-hidden-accessible">10 results are available, use up and down arrow keys to navigate.</span>
+        </div>
+        <input type="button" value="查行情" id="searchHQ" class="button">
+        <div id="aotoCompeleteDivId" class="atPeop" style="display: none;">
+        <h3>600，搜索结果</h3>
+        <ul class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all" id="ui-id-2" tabindex="0" style="z-index: 1000; display: none; width: 205px; top: 0px; left: -1.5px;">
+        </ul>
+        </div>
+    </div>
+    <script src="jquery-2.1.4.min.js"></script>
+    <script src="jquery-ui.js"></script>
+    <script src="top.js"></script>
+    <script src="index.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function () {
+          //index.init();
+          //股票代码查询
+          //http://www.gw.com.cn/autoCompleteStock.php?q=600&s=pc
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Famliy.Finance.Models.bank_record>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered table-hover">
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.user_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.family_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.period_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.opening_balance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.closed_balance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.balance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.closed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.closing_time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.create_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.modify_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.family_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.period_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.opening_balance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.closed_balance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.balance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.closed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.closing_time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.create_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.modify_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.ActionLink("编辑", "Edit", new { id = item.id }) |
+                @Html.ActionLink("详细", "Details", new { id = item.id }) |
+                @Html.ActionLink("删除", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

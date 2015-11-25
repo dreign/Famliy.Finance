@@ -1,0 +1,176 @@
+﻿@model Famliy.Finance.Models.sys_log
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>你确定要删除吗?</h3>
+<div>
+    <h4>sys_log</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.log_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.log_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.interface_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.interface_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.interface_param)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.interface_param)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.interface_type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.interface_type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.interface_dir)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.interface_dir)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.local_ip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.local_ip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.visitor_ip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.visitor_ip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.result)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.result)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.interface_status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.interface_status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.request_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.request_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.start_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.start_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.end_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.end_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.execute_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.execute_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.create_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.create_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.modify_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.modify_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="删除" class="btn btn-default" /> |
+            @Html.ActionLink("返回列表", "Index")
+        </div>
+    }
+</div>

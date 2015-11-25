@@ -1,0 +1,22 @@
+
+body {	
+    font-family: 'Microsoft YaHei',Verdana,Arial,Helvetica,sans-serif;
+}
+/* Page: Login/Register */
+.login,
+.register {
+  padding: 90px 0;
+  /*background-image: url(img/blurred-bg1.jpg);*/
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  width:100%;
+  height:100%;
+}
+.profile {
+    width:120px;
+}
+dt{ padding:3px;
+}
+dd{ padding:3px;
+}

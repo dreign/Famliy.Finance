@@ -1,0 +1,176 @@
+﻿@using Famliy.Finance.Models
+@model IEnumerable<Famliy.Finance.Models.bank_family>
+@{
+    ViewBag.Title = "我的家庭";
+}
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header with-footer">
+            <div class="header bordered-blueberry">我的家庭
+                @*@if (ViewData["bank_family"] != null)
+                {
+                    var item = ViewData["bank_family"] as bank_family;
+                    @Html.Label(item.family_name + "(" + item.family_nick_name + ")");
+                }*@
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.family_name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.family_nick_name)
+                        </th>                       
+                        <th>
+                            @Html.DisplayNameFor(model => model.assets_total)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.assets_debt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.assets_net)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.create_date)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.family_id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.family_name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.family_nick_name)
+                            </td>                           
+                            <td class="success">
+        @Html.DisplayFor(modelItem => item.assets_total)
+    </td>
+    <td class="warning">
+        @Html.DisplayFor(modelItem => item.assets_debt)
+    </td>
+                            <td class="active">
+                                @Html.DisplayFor(modelItem => item.assets_net)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.create_date)
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="footer">
+                净值产=总资产-总负债
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header with-footer">
+            <div class="header bordered-sky">
+                家庭成员
+            </div>
+            <div>
+                <div class="row">
+                    @{
+                        List<sys_user> userList = new List<sys_user>();
+                        if (ViewData["userList"] != null)
+                        {
+                            userList = ViewData["userList"] as List<sys_user>;
+                        }
+                        Dictionary<string, bank_account> accountDict = ViewData["bank_account"] as Dictionary<string, bank_account>;
+
+                        foreach (var user in userList)
+                        {
+                            <div class="col-lg-3 col-sm-6 col-xs-12">
+                                <div class="databox databox-graded">
+                                    <div class="databox-left no-padding">
+                                        <a href="/sys_user/Details/@user.user_id">
+                                            <img src="~/Content/img/child-128.png" style="width:65px; height:65px;">
+                                        </a>
+                                    </div>
+                                    <div class="databox-right">
+                                        <div class="databox-stat palegreen radius-bordered">
+                                            <i class="stat-icon glyphicon glyphicon-plus"></i>
+                                        </div>
+                                        <div class="databox-number lightcarbon no-margin">@accountDict[user.user_name].money.ToString("0.00")</div>
+                                         <div class="databox-text no-margin">@user.nick_name <br />
+                                        @user.user_name</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div> </div>
+            </div>
+        </div>
+    </div>
+   
+     <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header with-footer">
+            <div class="header bordered-yellow">
+                家庭动态
+            </div>
+            <div>
+                @{ 
+                    List<bank_operate_log> orperateList = ViewData["bank_operate_log"] as List<bank_operate_log>;
+                }
+                <table class="table table-hover table-striped table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("用户名")
+                            </th>
+                            <th>
+                                @Html.DisplayName("账户余额")
+                            </th>
+                            <th>
+                                @Html.DisplayName("科目")
+                            </th>
+                            <th>
+                                @Html.DisplayName("备注")
+                            </th>
+                            <th>
+                                @Html.DisplayName("日期")
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in orperateList)
+                        {
+                            <tr>
+                                <td>
+                                    @item.user_name
+                                </td>
+                                <td>
+                                    @item.money.ToString("0.00")
+                                </td>
+                                <td>
+                                    @item.subject_remark
+                                </td>
+                                <td>
+                                    @item.remark
+                                </td>
+                                <td>
+                                    @item.create_date.Value.ToString("yyyy-MM-dd hh:mm:ss")
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

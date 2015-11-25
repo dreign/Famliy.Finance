@@ -1,0 +1,147 @@
+﻿@using Famliy.Finance.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Famliy.Finance.Models.bank_operate_log>
+@{
+    ViewBag.Title = "资金明细";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header">
+            <div class="header bordered-sky">
+                列表
+            </div>
+            @using (Html.BeginForm("Index", "bank_operate_log", FormMethod.Get, new { @class = "form-inline" }))
+            {
+                <p>
+                    账户:
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @Style = "display:inline" })
+                    <button type="submit" class="btn btn-blue">查询</button>
+                    @Html.ActionLink("新增", "Create", "bank_family", new { @class = "btn btn-palegreen" })
+                </p>
+            }
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.user_id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.user_name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.money)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.history_total)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.subject_remark)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.order_id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.product_name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.product_number)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.order_amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.pay_way)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.remark)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.create_date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.modify_date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.status)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.user_id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.user_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.money)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.history_total)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.subject_remark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order_id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.product_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.product_number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order_amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pay_way)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.remark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.create_date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.modify_date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.status)
+                        </td>
+                        <td>
+                            @Html.ActionLink("编辑", "Edit", new { id = item.id }) |
+                            @Html.ActionLink("详细", "Details", new { id = item.id }) |
+                            @Html.ActionLink("删除", "Delete", new { id = item.id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <div class="row padding-10">
+                <div class="col-sm-6">
+                    <div class="dataTables_info">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="dataTables_paginate paging_bootstrap pull-right">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                <div class="alert-danger">@Html.ValidationSummary() </div>
+            </div>
+        </div>
+    </div>
+</div>

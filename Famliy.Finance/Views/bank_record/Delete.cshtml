@@ -1,0 +1,120 @@
+﻿@model Famliy.Finance.Models.bank_record
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>你确定要删除吗?</h3>
+<div>
+    <h4>bank_record</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.family_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.family_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.period_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.period_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.opening_balance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.opening_balance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.closed_balance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.closed_balance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.balance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.balance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.closed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.closed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.closing_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.closing_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.create_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.create_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.modify_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.modify_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="删除" class="btn btn-default" /> |
+            @Html.ActionLink("返回列表", "Index")
+        </div>
+    }
+</div>

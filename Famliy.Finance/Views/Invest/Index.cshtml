@@ -1,0 +1,850 @@
+﻿@model Famliy.Finance.Models.bank_operate_log
+@{
+    ViewBag.Title = "理财投资";
+}
+
+@*<link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="tabbable tabs-below">
+            <div class="tab-content">
+                <div id="tabindex" class="tab-pane active">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                            <div class="well">
+                                <img src="http://image.sinajs.cn/newchart/v5/usstock/min_idx_s/.dji.gif" width="250" height="125">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                            <div class="well">
+                                <img src="http://image.sinajs.cn/newchart/v5/usstock/min_idx_s/.ixic.gif" width="250" height="125">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                            <div class="well">
+                                <img src="http://image.sinajs.cn/newchart/v5/usstock/min_idx_s/.inx.gif" width="250" height="125">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                            <div class="well">
+                                <img src="http://image.sinajs.cn/newchart/hk_stock/realtime_min_small/HSI.gif" width="250" height="125">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                            <div class="well">
+                                <img src="http://image.sinajs.cn/newchart/hk_stock/realtime_min_small/HSCEI.gif" width="250" height="125">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                            <div class="well">
+                                <img src="http://image.sinajs.cn/newchart/hk_stock/realtime_min_small/HSCCI.gif" width="250" height="125">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="taba" class="tab-pane">
+                    <div class="row">
+                        <div class="col-lg-7 col-sm-7 col-xs-12">
+                            <div class="well with-header">
+                                <div class="header bordered-palegreen">
+                                    <div class="btn-toolbar">
+                                        <div class="btn-group">
+                                            <a class="btn btn-default  shiny icon-only danger" id="btn1" href="javascript:void(0);">分时</a>
+                                            <a class="btn btn-default  shiny icon-only danger" id="btn2" href="javascript:void(0);">日K</a>
+                                            <a class="btn btn-default  shiny icon-only danger" id="btn3" href="javascript:void(0);">周K</a>
+                                            <a class="btn btn-default  shiny icon-only danger" id="btn4" href="javascript:void(0);">月K</a>
+                                                                                      
+                                            <span class="pull-right" id="stockprice"></span>
+                                        </div>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <img id="stockimga" src="http://image.sinajs.cn/newchart/min/n/sh000001.gif" width="545" height="300" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-sm-5 col-xs-12">
+                            <div class="well well-lg" id="stocktablea">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="tabus" class="tab-pane">
+                    <div class="row">
+                        <div class="col-lg-7 col-sm-7 col-xs-12">
+                            <div class="well with-header">
+                                <div class="header bordered-palegreen">
+                                    <div class="btn-toolbar">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default">
+                                                分时
+                                            </button>
+                                            <button type="button" class="btn btn-default">
+                                                日K
+                                            </button>
+                                            <button type="button" class="btn btn-default">
+                                                周K
+                                            </button>
+                                            <button type="button" class="btn btn-default">
+                                                月K
+                                            </button>
+                                        </div>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <img id="stockimgus" src="http://image.sinajs.cn/newchart/min/n/sh000001.gif" width="545" height="300" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-sm-5 col-xs-12">
+                            <div class="well well-lg" id="stocktableus">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <ul class="nav nav-tabs tabs-flat  nav-justified" id="myTab2">
+                <li class="active">
+                    <a data-toggle="tab" href="#tabindex">指数</a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#taba">个股</a>
+                </li>
+            </ul>
+
+        </div>
+        <div class="horizontal-space"></div>
+        <div class="well with-header">
+            <div class="header bordered-sky">
+                投资理财
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="alert-danger">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.user_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user darkorange"></i></span>
+                                @Html.EditorFor(model => model.user_name, new { htmlAttributes = new { @class = "spinner-input form-control", @readonly = "readonly" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.user_name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">财务科目</label>
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-flag-o"></i></span>
+                                @Html.DropDownListFor(model => model.subject_id, ViewBag.SubjectList1 as IEnumerable<SelectListItem>, new { htmlAttributes = new { @class = "spinner-input form-control", @style = "width:300px" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.subject_id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.subject_remark, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
+                                @Html.EditorFor(model => model.subject_remark, new { htmlAttributes = new { @class = "spinner-input form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.subject_remark, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">股票代码</label>
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="typcn typcn-chart-line-outline"></i></span>
+                                @*<input type="text" class="bigdrop" id="stocke1" style="width:300px" onclick="refreshHQ(this.value);" />
+                                    <input type="text" class="spinner-input form-control" id="stocke1" placeholder="股票名称或代码" autocomplete="off" style="width:300px;color: rgb(93, 93, 93);" onclick = "refreshHQ(this.value);">*@
+                                @Html.EditorFor(model => model.product_name, new { htmlAttributes = new { @class = "bigdrop", @style = "width:300px", @id = "stocke1", @onclick = "refreshHQ(this.value);" } })
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                            <label class="control-label col-md-2">股票代码</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="typcn typcn-chart-line-outline"></i></span>
+                                    <input type="text" class="spinner-input form-control" id="stockin" placeholder="股票名称或代码" autocomplete="off" style="width:200px;color: rgb(93, 93, 93);">
+                                    <div id="aotoCompeleteDivId" class="atPeop" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">股票数量</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.product_number, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.product_number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.money, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon">￥</span>
+                                @Html.EditorFor(model => model.money, new { htmlAttributes = new { @class = "spinner-input form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.money, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.pay_way, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.pay_way, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.pay_way, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.remark, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.remark, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.remark, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.create_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.create_date, new { htmlAttributes = new { @class = "form-control date-picker", @id = "datepicker1", @style = "width:200px;" } })
+                                <span class="input-group-addon" style="width:unset">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.create_date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="提交" class="btn btn-blue" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div id="modal-success" class="modal modal-message modal-success fade" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <i class="glyphicon glyphicon-check"></i>
+                    </div>
+                    <div class="modal-title">Success</div>
+
+                    <div class="modal-body">You have done great!</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                    </div>
+                </div> <!-- / .modal-content -->
+            </div> <!-- / .modal-dialog -->
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    @*<script src="~/Scripts/jquery-ui.js"></script>*@
+    <!--Bootstrap Date Picker-->
+    <script src="~/Content/BeyondAdmin/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <script src="~/Content/BeyondAdmin/assets/js/datetime/bootstrap-timepicker.js"></script>
+    <script src="~/Content/BeyondAdmin/assets/js/bootbox/bootbox.js"></script>
+    <!--Jquery Select2-->
+    <script src="~/Content/BeyondAdmin/assets/js/select2/select2.js"></script>
+
+    <script type="text/javascript">
+        //--Bootstrap Date Picker--
+        $('#datepicker1').datepicker();
+        //--Bootstrap Time Picker--
+        //$('#timepicker1').timepicker();
+
+        //$("#stocke2").select2({
+        //    placeholder: "股票名称或代码",
+        //    allowClear: true
+        //});
+
+        var topSearchedStock = [];
+        function showok() {
+            bootbox.dialog({
+                message: $("#modal-success").html(),
+                title: "提交成功",
+                className: "",
+            });
+        }
+        function repoFormatResult(repo) {
+            var markup = repo.code + '  ' + repo.name;
+            return markup;
+        }
+
+        function repoFormatSelection(repo) {
+            return repo.name;
+        }
+        function formatRepoSelection(repo) {
+            return repo.code;
+        }
+        $("#stocke1").select2({
+            placeholder: "股票名称或代码",
+            minimumInputLength: 2,
+            id: 'code',
+            formatNoMatches: "没有匹配的股票",
+            language: "CN",
+            ajax: {
+                url: 'http://www.gw.com.cn/autoCompleteStock.php',
+                dataType: 'jsonp',
+                //quietMillis: 250,
+                data: function (term, page) {
+                    return {
+                        q: term, //search term
+                        page: page // page number
+                    };
+                },
+                results: function (data, page) {
+                    //var more = (page * 10) <= data.length;
+                    var more = false;
+                    return { results: data, more: more };
+                }
+            },
+            formatResult: repoFormatResult,
+            formatSelection: formatRepoSelection,
+            //dropdownCssClass: "bigdrop",
+            escapeMarkup: function (m) { return m; }
+        });
+
+        function buildtable(jdata) {
+            var str = '<table class="table table-striped table-bordered table-condensed">' +
+                '<tr><th>股票名称</th>' +
+                '<th>价位</th>' +
+          '<th>涨跌</th>' +
+          '<th>涨跌幅</th>' +
+          '<th>日期</th>' +
+
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.shanghai.name) + '</td>' +
+'<td>' + (jdata.retData.market.shanghai.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shanghai.curprice) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shanghai.rate) + '</td>' +
+    '<td>' + formateDate(new Date()) + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.shenzhen.name) + '</td>' +
+'<td>' + (jdata.retData.market.shenzhen.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shenzhen.curprice) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shenzhen.rate) + '</td>' +
+        '<td>' + formateDate(new Date()) + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.DJI.name) + '</td>' +
+'<td>' + (jdata.retData.market.DJI.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.DJI.growth) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.DJI.rate) + '</td>' +
+    '<td>' + formateDate(jdata.retData.market.DJI.date) + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.IXIC.name) + '</td>' +
+'<td>' + (jdata.retData.market.IXIC.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.IXIC.growth) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.IXIC.rate) + '</td>' +
+        '<td>' + formateDate(jdata.retData.market.IXIC.date) + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.INX.name) + '</td>' +
+'<td>' + (jdata.retData.market.INX.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.INX.growth) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.INX.rate) + '</td>' +
+        '<td>' + formateDate(jdata.retData.market.INX.date) + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.HSI.name) + '</td>' +
+'<td>' + (jdata.retData.market.HSI.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.HSI.growth) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.HSI.rate) + '</td>' +
+        '<td>' + formateDate(jdata.retData.market.HSI.date) + '</td>' +
+'</tr></table>'
+            return str;
+        }
+        function buildtable2(jdata) {
+            var str = '<table class="table">' +
+                '<tr><th>股票名称</th>' +
+                '<th>价位</th>' +
+          '<th>涨跌</th>' +
+          '<th>涨跌幅</th>' +
+          '<th>成交量</th>' +
+          '<th>成交额</th>' +
+          '<th>日期</th>' +
+
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.shanghai.name) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shanghai.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shanghai.curprice) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shanghai.rate) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shanghai.dealnumber) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shanghai.turnover) + '</td>' +
+    '<td>' + new Date().toLocaleDateString() + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.shenzhen.name) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shenzhen.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shenzhen.curprice) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shenzhen.rate) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shenzhen.dealnumber) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.shenzhen.turnover) + '</td>' +
+        '<td>' + new Date().toLocaleDateString() + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.DJI.name) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.DJI.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.DJI.growth) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.DJI.rate) + '</td>' +
+'<td>-</td>' +
+'<td>' + formatStock(jdata.retData.market.DJI.turnover) + '</td>' +
+    '<td>' + (jdata.retData.market.DJI.date) + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.IXIC.name) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.IXIC.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.IXIC.growth) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.IXIC.rate) + '</td>' +
+'<td>-</td>' +
+'<td>' + formatStock(jdata.retData.market.IXIC.turnover) + '</td>' +
+        '<td>' + (jdata.retData.market.IXIC.date) + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.INX.name) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.INX.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.INX.growth) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.INX.rate) + '</td>' +
+'<td>-</td>' +
+'<td>' + formatStock(jdata.retData.market.INX.turnover) + '</td>' +
+        '<td>' + (jdata.retData.market.INX.date) + '</td>' +
+'</tr>' +
+'<tr><td>' + (jdata.retData.market.HSI.name) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.HSI.curdot) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.HSI.growth) + '</td>' +
+'<td>' + formatStock(jdata.retData.market.HSI.rate) + '</td>' +
+'<td>-</td>' +
+'<td>' + formatStock(jdata.retData.market.HSI.turnover) + '</td>' +
+        '<td>' + (jdata.retData.market.HSI.date) + '</td>' +
+'</tr></table>'
+            return str;
+        }
+        function formatStock(v) {
+            if (v > 0)
+                return '<lable class="label label-danger">' + v + '</lable>';
+            else if (v < 0)
+                return '<lable class="label label-success">' + v + '</lable>';
+            else
+                return '<lable class="label">' + v + '</lable>';
+        }
+        function formateDate(str) {
+            var d = new Date(str.toString().replace(/-/g, "/"));
+            return d.Format("MM-dd hh:mm");
+        }
+
+        var hqimg = {};
+        hqimg.min = "";
+        hqimg.day = "";
+        hqimg.week = "";
+        hqimg.month = "";
+        function fillHq(market, jdata) {
+            if (jdata.errMsg == "success") {
+                hqimg.min = jdata.retData.stockinfo[0].minurl.toLowerCase();
+                hqimg.day = jdata.retData.stockinfo[0].dayurl.toLowerCase();
+                hqimg.week = jdata.retData.stockinfo[0].weekurl.toLowerCase();
+                hqimg.month = jdata.retData.stockinfo[0].monthurl.toLowerCase();
+
+                $("#stockimg" + market).attr('src', jdata.retData.stockinfo[0].minurl.toLowerCase() + "?" + Date.parse(new Date()));
+                $("#stocktable" + market).html(buildtable(jdata));
+                $("#stockprice").html("<span class='label label-info'>开盘:" + jdata.retData.stockinfo[0].OpenningPrice +
+                    "</span> <span class='label label-info'>  收盘:" + jdata.retData.stockinfo[0].closingPrice +
+                    "</span> <span class='label label-info'>  现价:" + jdata.retData.stockinfo[0].currentPrice) +
+                "</span>";
+            }
+        }
+        function getHQ(url, stockcodes, tabid) {
+            $.ajax({
+                cache: false,
+                dataType: 'json',
+                url: url,
+                type: 'post',
+                data: {
+                    apikey: apikey,
+                    stockid: stockcodes,
+                    list: 1
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('apikey', apikey);
+                },//这里设置header
+                success: function (data) {
+                    var jdata = eval("(" + data + ")");
+                    fillHq(jdata);
+                },
+                error: function (data) { }
+            });
+        }
+
+        function getHQmvc(market, stockcodes) {
+            $.get("/Invest/GetHQ", { market: market, stockcodes: stockcodes }, function (data) {
+                var jdata = eval("(" + data + ")");
+                fillHq(market, jdata);
+            });
+        }
+
+        $(document).ready(function () {
+            getHQmvc("a", "SH000001");
+            //getHQmvc("hk", "HSI");
+            //getHQmvc("us", "dji");
+            
+            $("#btn1").click(function () {
+                $("#stockimga").attr('src', hqimg.min + "?" + Date.parse(new Date()));
+            });
+            $("#btn2").click(function () {
+                $("#stockimga").attr('src', hqimg.day + "?" + Date.parse(new Date()));
+            });
+            $("#btn3").click(function () {
+                $("#stockimga").attr('src', hqimg.week + "?" + Date.parse(new Date()));
+            });
+            $("#btn4").click(function () {
+                $("#stockimga").attr('src', hqimg.month + "?" + Date.parse(new Date()));
+            });
+            
+        });
+        //function real() {
+        //    $("#stockimga").attr('src', hqimg.min + "?" + Date.parse(new Date()));
+        //}
+        //function dk() {
+        //    $("#stockimga").attr('src', hqimg.day + "?" + Date.parse(new Date()));
+        //}
+        //function wk() {
+        //    $("#stockimga").attr('src', hqimg.week + "?" + Date.parse(new Date()));
+        //}
+        //function mk() {
+        //    $("#stockimga").attr('src', hqimg.month + "?" + Date.parse(new Date()));
+        //}
+        //function refreshHQ(code) {
+        //    getHQmvc("a", code);
+        //}
+
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1,                 //月份
+                "d+": this.getDate(),                    //日
+                "h+": this.getHours(),                   //小时
+                "m+": this.getMinutes(),                 //分
+                "s+": this.getSeconds(),                 //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds()             //毫秒
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+
+
+        /*
+
+        http://fchart.sina.com.cn/newchart/small/nsh000001.gif
+
+            {
+    "errNum": 0,
+    "errMsg": "success",
+    "retData": {
+        "stockinfo": [
+            {
+                "name": "上证指数",
+                "code": "sh000001",
+                "date": "2015-10-19",
+                "time": "09:58:25",
+                "OpenningPrice": 3401.627,
+                "closingPrice": 3391.352,
+                "currentPrice": 3394.757,
+                "hPrice": 3404.25,
+                "lPrice": 3380.08,
+                "competitivePrice": 0,
+                "auctionPrice": 0,
+                "totalNumber": 88636710,
+                "turnover": 108351046986,
+                "increase": 0.10040243537091,
+                "buyOne": 0,
+                "buyOnePrice": 0,
+                "buyTwo": 0,
+                "buyTwoPrice": 0,
+                "buyThree": 0,
+                "buyThreePrice": 0,
+                "buyFour": 0,
+                "buyFourPrice": 0,
+                "buyFive": 0,
+                "buyFivePrice": 0,
+                "sellOne": 0,
+                "sellOnePrice": 0,
+                "sellTwo": 0,
+                "sellTwoPrice": 0,
+                "sellThree": 0,
+                "sellThreePrice": 0,
+                "sellFour": 0,
+                "sellFourPrice": 0,
+                "sellFive": 0,
+                "sellFivePrice": 0,
+                "minurl": "http://image.sinajs.cn/newchart/min/n/sh000001.gif",
+                "dayurl": "http://image.sinajs.cn/newchart/daily/n/sh000001.gif",
+                "weekurl": "http://image.sinajs.cn/newchart/weekly/n/sh000001.gif",
+                "monthurl": "http://image.sinajs.cn/newchart/monthly/n/sh000001.gif"
+            }
+        ],
+        "market": {
+            "shanghai": {
+                "name": "上证指数",
+                "curdot": 3394.757,//价位
+                "curprice": 3.405,
+                "rate": 0.1,
+                "dealnumber": 886367,
+                "turnover": 10835104
+            },
+            "shenzhen": {
+                "name": "深证成指",
+                "curdot": 11411.194,
+                "curprice": 36.36,
+                "rate": 0.32,
+                "dealnumber": 82931865,
+                "turnover": 12957297
+            },
+            "DJI": {
+                "name": "道琼斯",
+                "date": "2015-10-17 07:30:11",
+                "curdot": 17215.97,
+                "rate": 0.43,
+                "growth": 74.22,
+                "startdot": 17141.75,
+                "closedot": 17141.75,
+                "hdot": 17220.02,
+                "ldot": 17107.35,
+                "turnover": 67440000
+            },
+            "IXIC": {
+                "name": "纳斯达克",
+                "date": "2015-10-17 05:40:00",
+                "curdot": 4886.69,
+                "rate": 0.34,
+                "growth": 16.59,
+                "startdot": 4872.36,
+                "closedot": 4870.1,
+                "hdot": 4886.96,
+                "ldot": 4851.29,
+                "turnover": 1856673054
+            },
+            "INX": {
+                "name": "纳斯达克",
+                "date": "2015-10-17 05:40:00",
+                "curdot": 2033.11,
+                "rate": 0.46,
+                "growth": 9.25,
+                "startdot": 2024.37,
+                "closedot": 2023.86,
+                "hdot": 2033.54,
+                "ldot": 2020.46,
+                "turnover": 0
+            },
+            "HSI": {
+                "name": "恒生指数",
+                "date": "2015/10/19 09:57",
+                "curdot": 22957.55,
+                "rate": -0.48,
+                "growth": -109.82,
+                "startdot": 23085.61,
+                "closedot": 23067.37,
+                "hdot": 23085.61,
+                "ldot": 22933.02,
+                "turnover": 12951927,
+                "52hdot": 28588.52,
+                "52ldot": 20368.12
+            }
+        }
+    }
+}
+            */
+
+
+
+        /*
+
+        function formatRepoSelection(repo) {
+            return repo.code || repo.name;
+        }
+        function formatRepo(repo) {
+            if (repo.loading) return repo.text;
+            var markup = repo.code + '  ' + repo.name;
+            return markup;
+        }
+
+        function resultFormatResult(medata) {
+            return medata.code;
+        }
+
+        function resultFormatSelection(medata) {
+            return medata.code;
+        }
+        $("#stocke8").select2({
+            placeholder: "股票名称或代码",
+            minimumInputLength: 2,
+            id: 'code',
+            formatNoMatches: "没有匹配的股票",
+            language: "CN",
+            //id: function (bond) { return bond._id; },
+            ajax: {
+                url: 'http://www.gw.com.cn/autoCompleteStock.php',
+                dataType: 'jsonp',
+                //delay: 250,
+                data: function (term, page) {
+                    return {
+                        q: term, //search term
+                        page: page // page number
+                    };
+                }
+            },
+            processResults: function (data, page) {
+                // parse the results into the format expected by Select2.
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data
+                return {
+                    results: data
+                };
+            },
+            //results: function (data, page) {
+            //    return { results: data };
+            //},
+            //cache: true,
+            //formatResult: function (medata) { },
+            //formatSelection: resultFormatSelection,  // omitted for brevity, see the source of this page
+            dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+            escapeMarkup: function (m) { return m; },
+            //escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+            templateResult: formatRepo, // omitted for brevity, see the source of this page
+            templateSelection: formatRepoSelection, // omitted for brevity, see the source of this page
+            initSelection: function (element, callback) {
+                var data = [{id: element.code, text: element.name}];
+                callback({ id: element.code, text: element.name });//这里初始化
+            },
+            //formatInputTooShort: "请输入",
+            formatNoMatches: "没有匹配的股票",
+            language: "CN"
+            //formatSearching: "查询中..."
+        });
+
+
+
+
+        function format(item) { return item.tag; }
+       function getdata(request, response) {
+            var dd = $.ajax({
+                cache: false,
+                dataType: 'json',
+                url: 'http://www.gw.com.cn/autoCompleteStock.php',
+                data: 'q=' + encodeURIComponent($("#stocke2").val()) + '&s=pc',
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            tag: item.name,
+                            id: item.code
+                        };
+                    }));
+                    //var data=[{id:0,tag:'enhancement'},{id:1,tag:'bug'},{id:2,tag:'duplicate'},{id:3,tag:'invalid'},{id:4,tag:'wontfix'}];
+                    return { text: 'tag', results: data };
+                },
+                error: function (data) { }
+            });
+            return dd;
+        }
+
+        // $(document).ready(function () {
+        $("#stocke2").select2({
+            placeholder: "股票名称或代码",
+            allowClear: true,
+            data: getdata,
+            formatSelection: format,
+            formatResult: format
+        });
+        // });
+
+        $(document).ready(function () {
+            //股票搜索
+            $('#stockin').autocomplete({
+                minLength: 1,
+                //autoFocus:true,
+                source: function (request, response) {
+                    $.ajax({
+                        cache: false,
+                        dataType: 'jsonp',
+                        url: 'http://www.gw.com.cn/autoCompleteStock.php',
+                        //url: 'http://114.80.136.51/autoCompleteStock.php',
+                        data: 'q=' + encodeURIComponent(request.term) + '&s=pc',
+                        success: function (data) {
+                            $('#aotoCompeleteDivId').show();
+                            if (data.length > 0) {
+                                //defaultLi = '<h3>' + request.term + '，搜索结果</h3>';
+                                defaultLi = '<div class="alert alert-success fade in">' + request.term + '，搜索结果</div>';
+                            } else {
+                                defaultLi = '<div class="alert alert-danger fade in">对不起，找不到：' + request.term.substr(0, 10) + '</div>';
+                            }
+                            if ($('#aotoCompeleteDivId').find('div').length > 0) {
+                                $('#aotoCompeleteDivId').find('div').next('li').remove();
+                                $('#aotoCompeleteDivId').find('div').remove();
+                            }
+                            $('#aotoCompeleteDivId').prepend(defaultLi);
+                            response($.map(data, function (item) {
+                                topSearchedStock.push(item.code);
+                                return {
+                                    label: item.name,
+                                    value: item.code
+                                };
+                            }));
+                        },
+                        error: function (data) { }
+                    });
+                },
+                select: function (event, ui) {
+                    var val_tmp = ui.item.value;
+                    val_tmp = val_tmp.replace(/[A-Za-z]/g, '');
+                    $(this).val(val_tmp);
+                    var href = 'http://cj.gw.com.cn/SearchStock.php?code=' + ui.item.value;
+                    window.location.href = href;
+                    return false;
+                },
+                focus: function (event, ui) {
+                    var val_tmp = ui.item.value;
+                    val_tmp = val_tmp.replace(/[A-Za-z]/g, '');
+                    $(this).val(val_tmp);
+                    return false;
+                },
+                close: function (event, ui) {
+                    $('#aotoCompeleteDivId').hide();
+                },
+                open: function (event, ui) {
+                    //$('#aotoCompeleteDivId').find('ul').className("dropdown-menu");
+                    $('#aotoCompeleteDivId').find('ul').css({ top: "0px" });
+                }
+
+            })
+            .autocomplete("option", "appendTo", "#aotoCompeleteDivId")
+            .autocomplete("option", "position", { my: "left top+29", at: "left bottom" });
+        });
+        */
+
+    </script>
+}
+
+

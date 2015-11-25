@@ -1,0 +1,131 @@
+﻿@using Famliy.Finance.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Famliy.Finance.Models.bank_family>
+@{
+    ViewBag.Title = "家庭管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header">
+            <div class="header bordered-sky">
+                列表
+            </div>
+            @using (Html.BeginForm("Index", "bank_family", FormMethod.Get, new { @class = "form-inline" }))
+            {
+                <p>
+                    家庭:
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @Style = "display:inline" })
+                    <button type="submit" class="btn btn-blue">查询</button>
+                    @Html.ActionLink("新增", "Create", "bank_family", new { @class = "btn btn-palegreen" })
+                </p>
+            }
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.family_id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.family_name)
+                    </th>
+                     <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.family_nick_name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.assets_total)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.assets_money)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.assets_investment)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.assets_real)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.assets_debt)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.assets_net)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.create_date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.modify_date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GetEnumerator().Current.status)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.family_id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.family_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.family_nick_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.assets_total)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.assets_money)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.assets_investment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.assets_real)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.assets_debt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.assets_net)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.create_date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.modify_date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.status)
+                        </td>
+                        <td>
+                            @Html.ActionLink("编辑", "Edit", new { id = item.family_id }) |
+                            @Html.ActionLink("详细", "Details", new { id = item.family_id }) |
+                            @Html.ActionLink("删除", "Delete", new { id = item.family_id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+           
+            <div class="row padding-10">
+                <div class="col-sm-6">
+                    <div class="dataTables_info">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="dataTables_paginate paging_bootstrap pull-right">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                <div class="alert-danger">@Html.ValidationSummary() </div>
+            </div>
+        </div>
+    </div>
+</div>
+

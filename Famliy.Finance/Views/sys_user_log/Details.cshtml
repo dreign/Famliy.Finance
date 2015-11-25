@@ -1,0 +1,90 @@
+﻿@model Famliy.Finance.Models.sys_user_log
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>sys_user_log</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.user_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.action)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.action)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.action_desc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.action_desc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.login_ip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.login_ip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.login_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.login_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.create_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.create_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.modify_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.modify_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("编辑", "Edit", new { id = Model.log_id }) |
+    @Html.ActionLink("返回列表", "Index")
+</p>

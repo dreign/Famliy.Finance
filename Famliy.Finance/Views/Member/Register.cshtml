@@ -1,0 +1,162 @@
+﻿
+@using Famliy.Finance.Models
+@model RegisterViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "管理系统 | 注册";
+}
+<!DOCTYPE html>
+<!--
+Beyond Admin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3
+Version: 1.0.0
+Purchase: http://wrapbootstrap.com
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--Head-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+
+    <meta name="description" content="管理系统" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="~/Content/BeyondAdmin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+    <link href="~/Content/BeyondAdmin/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!--Fonts-->
+    <!--Beyond styles-->
+    @*<link href="~/Content/BeyondAdmin/assets/css/beyond.min.css" id="beyond-link" rel="stylesheet" />*@
+    <link href="~/Content/BeyondAdmin/assets/css/beyond.min.css" rel="stylesheet" />
+    <link href="~/Content/BeyondAdmin/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/BeyondAdmin/assets/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="~/Content/BeyondAdmin/assets/js/skins.min.js"></script>
+</head>
+<!--Head Ends-->
+<!--Body-->
+<body>
+    <div class="register">
+        @using (Html.BeginForm("Register", "Member", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="register-container animated fadeInDown">
+                <div class="registerbox bg-white">
+                    <div class="registerbox-title">注册</div>
+
+                    <div class="registerbox-caption ">请填写注册信息</div>
+                    <div class="registerbox-textbox">
+                        @*<input type="text" class="form-control" placeholder="UserName" />*@
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "邮箱" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="registerbox-textbox">
+                        @*<input type="password" class="form-control" placeholder="Enter Password" />*@
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "密码" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="registerbox-textbox">
+                        @*<input type="password" class="form-control" placeholder="Confirm Password" />*@
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "确认密码" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                    <hr class="wide" />
+                    <div class="registerbox-textbox">
+                        @*<input type="text" class="form-control" placeholder="NickName" />*@
+                        @Html.TextBoxFor(m => m.NickName, new { @class = "form-control", @placeholder = "昵称" })
+                        @Html.ValidationMessageFor(m => m.NickName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="registerbox-textbox">
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                <div class="radio">
+                                    <label>
+                                        @Html.RadioButtonFor(model => model.Sex, true, new { @name = "form-field-radio", @class = "colored-blueberry" })
+                                        <span class="text">男</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                <div class="radio">
+                                    <label>
+                                        @*<input name="form-field-radio" type="radio" class="inverted">*@
+                                        @Html.RadioButtonFor(model => model.Sex, false, new { @name = "form-field-radio", @class = "colored-danger" })
+                                        <span class="text">女</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="registerbox-textbox">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Birthday, new { @class = "form-control date-picker", @placeholder = "生日" })
+                            @*<input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd">*@
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Birthday, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="registerbox-textbox">
+                        @*@Html.LabelFor(model => model.VerificationCode, new { @class = "control-label col-md-2" })*@
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                @Html.TextBoxFor(model => model.VerificationCode, new { @class = "form-control", @placeholder = "验证码" })
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                <img id="verificationcode" title="点击刷新" src="@Url.Action("VerificationCode")" style="cursor:pointer" />
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.VerificationCode, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="registerbox-textbox no-padding-bottom">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="colored-primary" checked="checked">
+                                <span class="text darkgray">我同意 <a href="~/contract.html" target="_blank" class="themeprimary">服务条款</a></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="registerbox-submit">
+                        @*@Html.ActionLink("登录", "Login")*@
+                        <input type="submit" class="btn btn-primary pull-right" value="提交">
+                    </div>
+                </div>
+                <div class="logobox">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+    </div>
+    <!--Basic Scripts-->
+    <script src="~/Content/BeyondAdmin/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/BeyondAdmin/assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="~/Content/BeyondAdmin/assets/js/beyond.min.js"></script>
+    <script src="~/Content/BeyondAdmin/assets/js/select2/select2.js"></script>
+    <!--Bootstrap Date Picker-->
+    <script src="~/Content/BeyondAdmin/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <!--Google Analytics::Demo Only-->
+    <script type="text/javascript">
+        //--Bootstrap Date Picker--
+        $('.date-picker').datepicker();
+
+        $("#verificationcode").click(function () {
+            $("#verificationcode").attr("src", "@Url.Action("VerificationCode")?" + new Date());
+        })
+    </script>
+
+</body>
+<!--Body Ends-->
+</html>
+
+
+

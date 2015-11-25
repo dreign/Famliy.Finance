@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{921785EA-C5C7-44B5-9FE1-D41523DBE306}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GW.Utils</RootNamespace>
+    <AssemblyName>GW.Utils</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AsyncIO, Version=0.1.17.0, Culture=neutral, PublicKeyToken=44a94435bd6f33f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncIO.0.1.17.0\lib\net40\AsyncIO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\lib\mongodb_source\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\lib\mongodb_source\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="NetMQ, Version=3.3.2.1, Culture=neutral, PublicKeyToken=a6decef4ddc58b3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetMQ.3.3.2.1\lib\net40\NetMQ.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseConstants.cs" />
+    <Compile Include="Caching\Cache.cs" />
+    <Compile Include="Caching\CacheEnums.cs" />
+    <Compile Include="Caching\CacheItem.cs" />
+    <Compile Include="Caching\IDependency.cs" />
+    <Compile Include="Caching\SystemInfo.cs" />
+    <Compile Include="ConfigManager.cs" />
+    <Compile Include="DataAccess\DatabaseType.cs" />
+    <Compile Include="DataAccess\DBFactoryHelper.cs" />
+    <Compile Include="DataAccess\IDBHelper.cs" />
+    <Compile Include="DataAccess\MongoDB\MongoHelper.cs" />
+    <Compile Include="DataAccess\OracleDB.cs" />
+    <Compile Include="DataAccess\SqlDB.cs" />
+    <Compile Include="DateTimeHelper.cs" />
+    <Compile Include="EncryptHelper.cs" />
+    <Compile Include="EnvironmentHelper.cs" />
+    <Compile Include="ExcelHelper.cs" />
+    <Compile Include="FileHelper.cs" />
+    <Compile Include="JsonHelper.cs" />
+    <Compile Include="LogHelper.cs" />
+    <Compile Include="MQ\GWMQDefine.cs" />
+    <Compile Include="MQ\GWMQServer.cs" />
+    <Compile Include="MQ\GWMQClient.cs" />
+    <Compile Include="ParseHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflecteHelper.cs" />
+    <Compile Include="RemotingHelper.cs" />
+    <Compile Include="Serializerhelper.cs" />
+    <Compile Include="SerializerUtility.cs" />
+    <Compile Include="StringHelper.cs" />
+    <Compile Include="TypeExtension\CommonExtension.cs" />
+    <Compile Include="TypeExtension\DateTimeExtension.cs" />
+    <Compile Include="TypeExtension\EnumerableExtensions.cs" />
+    <Compile Include="TypeExtension\ExtensionHelper.cs" />
+    <Compile Include="TypeExtension\GuidExtension.cs" />
+    <Compile Include="TypeExtension\IntExtension.cs" />
+    <Compile Include="TypeExtension\LongExtension.cs" />
+    <Compile Include="TypeExtension\ObjectExtension.cs" />
+    <Compile Include="TypeExtension\StreamExtension.cs" />
+    <Compile Include="TypeExtension\StringExtension.cs" />
+    <Compile Include="TypeExtension\XmlNodeExtension.cs" />
+    <Compile Include="Web\CacheHelper.cs" />
+    <Compile Include="Web\RequestHelper.cs" />
+    <Compile Include="Web\SecurityHelper.cs" />
+    <Compile Include="XmlHelper.cs" />
+    <Compile Include="ZipHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataAccess\MongoDB\MongoDB_QuerySample.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

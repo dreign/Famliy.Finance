@@ -1,0 +1,215 @@
+﻿@model Famliy.Finance.Models.sys_role
+@using Famliy.Finance.Models;
+@{
+    ViewBag.Title = "角色管理";
+    var PermissionList=ViewBag.PermissionList as List<sys_permission>;
+    var RolePermissionList=ViewBag.RolePermissionList as List<sys_role_permission>;
+}
+<style type="text/css">
+    select[multiple], select[size] {
+     height: 225px; 
+}
+    .demo {
+        width: 450px;
+        margin: 100px auto;
+    }
+
+    .select_side {
+        float: left;
+        /*width: 220px;*/
+    }
+
+    .selectL {
+        width: 200px;
+        height: 220px;
+    }
+
+    .select_opt {
+        padding:0 10px 0 10px;
+        float: left;
+        width: 60px;
+        height: 100%;
+        margin-top: 36px;
+    }
+
+        .select_opt p {
+            width: 26px;
+            height: 26px;
+            margin-top: 6px;
+            background: url(arr.gif) no-repeat;
+            cursor: pointer;
+            text-indent: -999em;
+        }
+
+            .select_opt p#toright {
+                background-position: 2px 0;
+            }
+
+            .select_opt p#toleft {
+                background-position: 2px -22px;
+            }
+
+    .sub_btn {
+        clear: both;
+        height: 42px;
+        line-height: 42px;
+        padding-top: 10px;
+        text-align: left;
+    }
+</style>
+<div class="row">
+
+    <div class="col-lg-12 col-sm-12 col-xs-12" style="padding-left:30px;">
+        <h5 class="row-title before-palegreen"><i class="fa fa-columns palegreen"></i>@Html.ActionLink("返回列表", "Index")</h5>
+    </div>
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+
+        <div class="col-md-6">
+            <div class="well with-header">
+                <div class="header bordered-sky">
+                    角色
+                </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="alert-danger">@Html.ValidationSummary() </div>
+                        </div>
+                        @Html.HiddenFor(model => model.role_id, htmlAttributes: new { @id = "roleid" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.role_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.role_name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.role_name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.role_desc, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.role_desc, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.role_desc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.create_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.create_date, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.create_date, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.modify_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.modify_date, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.modify_date, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.status, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="保存" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well with-header">
+                <div class="header bordered-sky">
+                    角色的权限
+                </div>
+                <div>
+                    <div class="select_side">
+                        <p>待选区</p>
+                        <select id="selectL" class="selectL" name="selectL" multiple="multiple">
+                            @foreach (var item in PermissionList)
+                            {
+                                <option value="@item.permission_id">@item.permission_name</option>
+                            }                           
+                        </select>
+                    </div>
+                    <div class="select_opt">
+                        <a class="btn btn-default btn-lg shiny icon-only blue" href="javascript:void(0);" id="toright" title="添加"><i class="fa fa-toggle-right"></i></a>
+                        <a class="btn btn-default btn-lg shiny icon-only blue" href="javascript:void(0);" id="toleft" title="移除"><i class="fa fa-toggle-left"></i></a>
+                    </div>
+                    <div class="select_side">
+                        <p>已选区</p>
+                        <select id="selectR" class="selectL" name="selectR" multiple="multiple">
+                            @foreach (var item in RolePermissionList)
+                            {
+                                <option value="@item.permission_id">@item.sys_permission.permission_name</option>
+                            }  
+                        </select>
+                    </div>
+                    <div class="sub_btn"><input type="button" id="sub" value="保存" class="btn btn-primary" /></div>              
+                </div>
+            </div>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+$(function(){
+    var leftSel = $("#selectL");
+	var rightSel = $("#selectR");
+	$("#toright").bind("click",function(){
+		leftSel.find("option:selected").each(function(){
+			$(this).remove().appendTo(rightSel);
+		});
+	});
+	$("#toleft").bind("click",function(){
+		rightSel.find("option:selected").each(function(){
+			$(this).remove().appendTo(leftSel);
+		});
+	});
+	leftSel.dblclick(function(){
+		$(this).find("option:selected").each(function(){
+			$(this).remove().appendTo(rightSel);
+		});
+	});
+	rightSel.dblclick(function(){
+		$(this).find("option:selected").each(function(){
+			$(this).remove().appendTo(leftSel);
+		});
+	});
+	$("#sub").click(function(){
+		var selVal = [];
+		rightSel.find("option").each(function(){
+			selVal.push(this.value);
+		});
+		selVals = selVal.join(",");
+		//selVals = rightSel.val();
+		if(selVals==""){
+			alert("没有选择任何项！");
+		} else {
+		    var roleid = $("#roleid").val();
+		    $.get("/sys_role/save", { rid:roleid,pids: selVals }, function (data) {
+		        if (data == "ok")
+		            alert("保存成功");
+		        else
+		            alert("保存失败");
+		    });
+		}
+	});
+});
+</script>
+}

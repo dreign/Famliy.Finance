@@ -1,0 +1,135 @@
+﻿@model Famliy.Finance.Models.bank_operate_log
+@{
+    ViewBag.Title = "记账";
+}
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header">
+            <div class="header bordered-sky">
+                记账
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-2"></label>
+                        <div class="col-md-10">
+                            <div class="alert-danger">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.user_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user darkorange"></i></span>
+                                @Html.EditorFor(model => model.user_name, new { htmlAttributes = new { @class = "spinner-input form-control", @readonly = "readonly" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.user_name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">财务科目</label>
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-flag-o"></i></span>
+                                @Html.DropDownListFor(model => model.subject_id, ViewBag.SubjectList1 as IEnumerable<SelectListItem>, new { htmlAttributes = new { @class = "spinner-input form-control", @style = "width:300px" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.subject_id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.subject_remark, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-rocket"></i></span>
+                                @Html.EditorFor(model => model.subject_remark, new { htmlAttributes = new { @class = "spinner-input form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.subject_remark, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.money, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                <span class="input-group-addon">￥</span>
+                                @Html.EditorFor(model => model.money, new { htmlAttributes = new { @class = "spinner-input form-control" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.money, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.pay_way, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.pay_way, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.pay_way, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.remark, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.remark, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.remark, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.create_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.create_date, new { htmlAttributes = new { @class = "form-control date-picker", @id = "datepicker1", @style = "width:200px;" } })
+                                <span class="input-group-addon" style="width:unset">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.create_date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="提交" class="btn btn-blue" />
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>  
+        <div id="modal-success" class="modal modal-message modal-success fade" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <i class="glyphicon glyphicon-check"></i>
+                    </div>
+                    <div class="modal-title">Success</div>
+
+                    <div class="modal-body">You have done great!</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                    </div>
+                </div> <!-- / .modal-content -->
+            </div> <!-- / .modal-dialog -->
+        </div>
+     
+    </div>
+</div>
+@section scripts{
+    <!--Bootstrap Date Picker-->
+    <script src="~/Content/BeyondAdmin/assets/js/datetime/bootstrap-datepicker.js"></script>
+    <script src="~/Content/BeyondAdmin/assets/js/datetime/bootstrap-timepicker.js"></script>
+<script src="~/Content/BeyondAdmin/assets/js/bootbox/bootbox.js"></script>
+    <script type="text/javascript">
+        $('#datepicker1').datepicker();
+        function showok() {
+            bootbox.dialog({
+                message: $("#modal-success").html(),
+                title: "提交成功",
+                className: "",
+            });
+        }
+    </script>
+}
+
+

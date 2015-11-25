@@ -1,0 +1,34 @@
+﻿MVC+EF更新数据库
+
+要使用代码先行提供的迁移功能来保证模型和数据库自动匹配，在库程序包管理器里依次执行以下命令：
+1.启用迁移功能：Enable-Migrations -ContextTypeName Famliy.Finance.Models.BankModel
+2.建立初态：add-migration Initial
+3.自动比对差异生成迁移类：add-migration AddRatingMig
+4.将迁移应用到数据库：update-database
+在实际的项目开发过程或者维护过程中，因为业务需求或者设计的变动，经常需要对库表增删字段，在项目团队多人合作方式开发情况下，很容易遗漏对数据库的修改，而迁移功能就很好地保证了这一点，“自动”记录了模型变动需要对库表进行的变更操作。
+
+
+修改后将应用程序重新编译，然后选择工具>库程序包管理器>程序包管理控制台，如图：
+
+打开控制台，输入enable-migrations -force ,然后回车 如图：
+
+Add-Migration
+Update-Database
+
+
+运行后在项目项目资源管理器中会出现Migrations文件夹，打开Configuration.cs 文件，将AutomaticMigrationsEnabled 值改为 true.
+然后在控制台中输入 update-database 运行
+
+
+
+1>、在程序包管理器控制台，执行语句：
+
+PM> Enable-Migrations -EnableAutomaticMigrations
+
+2>、在程序包管理器控制台，执行语句：
+
+PM> Add-Migration InitialCreate
+
+3>、在程序包管理器控制台，执行语句：
+
+PM> Update-Database -Verbose

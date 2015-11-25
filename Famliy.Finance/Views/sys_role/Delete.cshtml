@@ -1,0 +1,72 @@
+﻿@model Famliy.Finance.Models.sys_role
+
+@{
+    ViewBag.Title = "角色管理";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header">
+            <div class="header bordered-sky">
+                删除
+            </div>
+
+            <h3>你确定要删除吗?</h3>
+            <div>
+               
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.role_name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.role_name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.role_desc)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.role_desc)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.create_date)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.create_date)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.modify_date)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.modify_date)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.status)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.status)
+                    </dd>
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="删除" class="btn btn-default" /> |
+                        @Html.ActionLink("返回列表", "Index")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

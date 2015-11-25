@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Famliy.Finance.Models.sys_user_log>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.user_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.action)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.action_desc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.login_ip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.login_time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.create_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.modify_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.user_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.action)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.action_desc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.login_ip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.login_time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.create_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.modify_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+        <td>
+            @Html.ActionLink("编辑", "Edit", new { id=item.log_id }) |
+            @Html.ActionLink("详细", "Details", new { id=item.log_id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.log_id })
+        </td>
+    </tr>
+}
+
+</table>

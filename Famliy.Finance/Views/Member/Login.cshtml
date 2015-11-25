@@ -1,0 +1,99 @@
+﻿
+@using Famliy.Finance.Models
+@model LoginViewModel
+@{
+    Layout = null;
+    ViewBag.Title = "管理系统 | 登录";
+}
+<!DOCTYPE html>
+<!--
+Beyond Admin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3
+Version: 1.0.0
+Purchase: http://wrapbootstrap.com
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--Head-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+
+    <meta name="description" content="管理系统" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="~/Content/BeyondAdmin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+    <link href="~/Content/BeyondAdmin/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!--Fonts-->
+    <!--Beyond styles-->
+    @*<link href="~/Content/BeyondAdmin/assets/css/beyond.min.css" id="beyond-link" rel="stylesheet" />*@
+    <link href="~/Content/BeyondAdmin/assets/css/beyond.min.css" rel="stylesheet" />
+    <link href="~/Content/BeyondAdmin/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="~/Content/BeyondAdmin/assets/css/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="~/Content/BeyondAdmin/assets/js/skins.min.js"></script>;
+</head>
+<!--Head Ends-->
+<!--Body--> 
+<body>
+    <div class="login">
+        @using (Html.BeginForm("login", "member", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+            @Html.AntiForgeryToken()
+            <div class="login-container animated fadeInDown">
+                <div class="loginbox bg-white">
+                    <div class="loginbox-title">欢迎！</div>
+
+                    <div class="loginbox-textbox">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "邮箱" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        @*<input type="text" class="form-control" placeholder="Email" id="txtEmail" />*@
+                    </div>
+                    <div class="loginbox-textbox">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "密码" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        @*<input type="text" class="form-control" placeholder="Password" id="txtPW" />*@
+                    </div>
+                    <div class="loginbox-forgot">
+
+                        <label>
+                            @*<input class="checkbox-slider toggle colored-success" type="checkbox">*@
+                            @Html.TextBoxFor(model => model.RememberMe, new { @class = "checkbox-slider toggle colored-blue", @type = "checkbox" })
+                            <span class="text">&nbsp;&nbsp;记住我 </span>
+                        </label>
+                    </div>
+
+                    <div class="loginbox-submit">
+                        <input type="submit" class="btn btn-primary btn-block" value="登陆">
+                    </div>
+                    <div class="loginbox-signup">
+                        @Html.ActionLink("注册用户", "Register")
+                    </div>
+                    <div class="loginbox-signup">
+                        <a href="">忘记密码</a>
+                    </div>
+                </div>
+                <div class="logobox">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+    </div>
+    <!--Basic Scripts-->
+    <script src="~/Content/BeyondAdmin/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/BeyondAdmin/assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="~/Content/BeyondAdmin/assets/js/beyond.min.js"></script>
+
+    <!--Google Analytics::Demo Only-->
+
+</body>
+<!--Body Ends-->
+</html>

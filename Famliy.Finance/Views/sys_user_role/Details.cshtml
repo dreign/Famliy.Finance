@@ -1,0 +1,58 @@
+﻿@model Famliy.Finance.Models.sys_user_role
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>sys_user_role</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sys_role.role_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sys_role.role_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sys_user.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sys_user.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.create_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.create_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.modify_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.modify_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("编辑", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("返回列表", "Index")
+</p>

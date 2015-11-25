@@ -1,0 +1,697 @@
+﻿@using Famliy.Finance.Models
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "财务报表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    sys_user user = ViewData["sys_user"] == null ? new sys_user() : (sys_user)ViewData["sys_user"];
+
+    bank_family bfamily = ViewBag.bank_family;
+    bank_account baccount = ViewBag.bank_account;
+    var moneybl = (int)Math.Abs(bfamily.assets_debt / bfamily.assets_total * 100);
+    var familyUserbl = (int)Math.Abs(bfamily.assets_debt / baccount.money * 100);
+
+    List<report_family> Family = ViewBag.Family as List<report_family>;
+    List<report_family_day> FamilyDay = ViewBag.FamilyDay as List<report_family_day>;
+    List<report_family_subject_day> FamilySubjectDay = ViewBag.FamilySubjectDay as List<report_family_subject_day>;
+    List<report_user> User = ViewBag.User as List<report_user>;
+    List<report_user_day> UserDay = ViewBag.UserDay as List<report_user_day>;
+    List<report_user_subject_day> UserSubjectDay = ViewBag.UserSubjectDay as List<report_user_subject_day>;
+
+}
+<style type="text/css">
+   /*.row-2{
+           width: 100%;
+    margin: 0;
+    position: relative;
+        height: 16.66%;
+            display: block;
+            height: 20px;
+            line-height: 20px;
+            border-bottom: 1px solid #fff;
+    }*/
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget flat radius-bordered">  
+            <div class="widget-body">
+                <div class="widget-main ">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs tabs-flat" id="myTab11">
+                            <li class="active">
+                                <a data-toggle="tab" href="#Family">
+                                    家庭报表
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#User">
+                                    个人报表
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content tabs-flat">
+                            <div id="Family" class="tab-pane active">
+
+                                <div class="well">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(f => bfamily.family_name)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => bfamily.family_nick_name)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => bfamily.assets_total)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => bfamily.assets_debt)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => bfamily.assets_net)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => bfamily.create_date)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => bfamily.family_id)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => bfamily.family_name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => bfamily.family_nick_name)
+                                                </td>
+                                                <td class="success">
+                                                    @Html.DisplayFor(modelItem => bfamily.assets_total)
+                                                </td>
+                                                <td class="warning">
+                                                    @Html.DisplayFor(modelItem => bfamily.assets_debt)
+                                                </td>
+                                                <td class="active">
+                                                    @Html.DisplayFor(modelItem => bfamily.assets_net)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => bfamily.create_date)
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div class="well" style="background-color:white">
+                                    <div class="row padding-5">
+                                        <div class="col-md-3 text-align-center">
+                                            <div class="databox-number number-xxlg sonic-silver" style="font-size:x-large;">@Html.DisplayFor(modelItem => bfamily.assets_net)</div>
+                                            <div class="databox-text storm-cloud">净值产</div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="databox-row row-6 text-left">
+                                                <span class="badge badge-palegreen badge-empty margin-left-5"></span>
+                                                <span class="databox-inlinetext uppercase darkgray margin-left-5">资产：@Html.DisplayFor(modelItem => bfamily.assets_total)</span>
+                                                <span class="badge badge-yellow badge-empty margin-left-5"></span>
+                                                <span class="databox-inlinetext uppercase darkgray margin-left-5">负债：@Html.DisplayFor(modelItem => bfamily.assets_debt)</span>
+                                            </div>
+                                            <div class="databox-row row-6">
+                                                <div class="progress bg-yellow progress-no-radius">
+                                                    <div class="progress-bar progress-bar-palegreen" role="progressbar" aria-valuenow="@moneybl" aria-valuemin="0" aria-valuemax="100" style="width: 78%">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="background-color:white">
+                                        <div class="col-md-6 padding-5">
+                                            <div id="containerf1" class="chart"></div>
+                                        </div>
+
+                                        <div class="col-md-6 padding-5">
+                                            <div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+                                                <span class="databox-text sonic-silver pull-left no-margin">财务科目</span>
+                                                <span class="databox-text sonic-silver pull-right no-margin uppercase">金额</span>
+                                            </div>
+                                            @foreach (var item in Family)
+                                            {
+                                            <div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+                                                <span class="badge badge-blue badge-empty pull-left margin-5"></span>
+                                                <span class="databox-text darkgray pull-left no-margin hidden-xs">@Html.DisplayFor(modelItem => item.subject_name)</span>
+                                                <span class="databox-text darkgray pull-right no-margin uppercase">@Html.DisplayFor(modelItem => item.total)</span>
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="well" style="background-color:white">
+                                    <div class="row">
+                                        <div class="col-md-6 padding-5">
+                                            <div id="containerf2" class="chart"></div>
+                                        </div>
+
+                                        <div class="col-md-6 padding-5">
+                                            <div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+                                                <span class="databox-text sonic-silver pull-left no-margin">金额</span>
+                                                <span class="databox-text sonic-silver pull-right no-margin uppercase">日期</span>
+                                            </div>
+                                            @foreach (var item in FamilyDay)
+                                            {
+                                            <div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+                                                <span class="badge badge-green badge-empty pull-left margin-5"></span>
+                                                <span class="databox-text darkgray pull-left no-margin hidden-xs">@Html.DisplayFor(modelItem => item.total)</span>
+                                                <span class="databox-text darkgray pull-right no-margin uppercase">@Html.DisplayFor(modelItem => item.dt)</span>
+                                            </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                         
+
+                                  
+                                @*<div class="well with-header">
+                                            <div class="header bordered-blue">家庭资金每日汇总</div>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>                                                       
+                                                        <th>
+                                                            家庭Id
+                                                        </th>
+                                                        <th>
+                                                            家庭名称
+                                                        </th>
+                                                        <th>
+                                                           金额
+                                                        </th>
+                                                        <th>
+                                                            日期
+                                                        </th>                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in FamilyDay) {
+                                                    <tr>                                                        
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.bank_family_family_id)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.family_name)
+                                                        </td>
+                                                        <td class="active">
+                                                            @Html.DisplayFor(modelItem => item.total)
+                                                        </td>
+                                                        <td >
+                                                            @Html.DisplayFor(modelItem => item.dt)
+                                                        </td>                                                        
+                                                    </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>*@
+                               
+                                <div class="well with-header">
+                                    <div class="header bordered-blue">家庭资金每日分类汇总</div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    家庭Id
+                                                </th>
+                                                <th>
+                                                    家庭名称
+                                                </th>
+                                                <th>
+                                                    财务科目
+                                                </th>
+                                                <th>
+                                                    金额
+                                                </th>
+                                                <th>
+                                                    日期
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in FamilySubjectDay)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.bank_family_family_id)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.family_name)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.subject_name)
+                                                    </td>
+                                                    <td class="active">
+                                                        @Html.DisplayFor(modelItem => item.total)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.dt)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                            </div>
+
+                            <div id="User" class="tab-pane">
+                                <div class="well">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>                                               
+                                                <th>
+                                                    @Html.DisplayNameFor(f => baccount.user_name)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(f => user.nick_name)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => baccount.money)
+                                                </th>                                               
+                                                <th>
+                                                    @Html.DisplayNameFor(model => baccount.create_date)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => baccount.user_name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => user.nick_name)
+                                                </td>
+                                                <td class="active">
+                                                    @Html.DisplayFor(modelItem => baccount.money)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => baccount.create_date)
+                                                </td>                                               
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div class="well" style="background-color:white">
+                                         <div class="row">
+                                            <div class="col-md-3 padding-5 text-align-center">
+                                                <div class="databox-number number-xxlg sonic-silver" style="font-size:x-large;">@Html.DisplayFor(modelItem => baccount.money)</div>
+                                                <div class="databox-text storm-cloud">净值产</div>
+                                            </div>
+                                            <div class="col-md-9 padding-5">
+                                                <div class="databox-row row-6 text-left">
+                                                    <span class="badge badge-purple badge-empty margin-left-5"></span>
+                                                    <span class="databox-inlinetext uppercase darkgray margin-left-5">家庭资产：@Html.DisplayFor(modelItem => bfamily.assets_net)</span>
+                                                    <span class="badge badge-yellow badge-empty margin-left-5"></span>
+                                                    <span class="databox-inlinetext uppercase darkgray margin-left-5">我的资产：@Html.DisplayFor(modelItem => baccount.money)</span>
+                                                </div>
+                                                <div class="databox-row row-6">
+                                                    <div class="progress bg-yellow progress-no-radius">
+                                                        <div class="progress-bar progress-bar-purple" role="progressbar" aria-valuenow="@familyUserbl" aria-valuemin="0" aria-valuemax="100" style="width: 78%">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-md-6 padding-5">
+                                                <div id="containeru1" class="chart"></div>
+                                            </div>
+
+                                            <div class="col-md-6 padding-5">
+                                                <div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+                                                    <span class="databox-text sonic-silver pull-left no-margin">财务科目</span>
+                                                    <span class="databox-text sonic-silver pull-right no-margin uppercase">金额</span>
+                                                </div>
+                                                @foreach (var item in User)
+                                                {
+                                                    <div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+                                                        <span class="badge badge-blue badge-empty pull-left margin-5"></span>
+                                                        <span class="databox-text darkgray pull-left no-margin hidden-xs">@Html.DisplayFor(modelItem => item.subject_name)</span>
+                                                        <span class="databox-text darkgray pull-right no-margin uppercase">@Html.DisplayFor(modelItem => item.total)</span>
+                                                    </div>
+                                                }
+                                            </div>                                          
+                                    </div>
+                                </div>
+                             
+                                     <div class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+                                       <div class="databox-row row-12">
+                                            <div class="databox-cell cell-7 text-center  padding-5">
+                                                <div id="containeru2" class="chart"></div>
+                                            </div>
+
+                                            <div class="databox-cell cell-5 text-center no-padding-left padding-bottom-30">
+                                                <div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+                                                    <span class="databox-text sonic-silver pull-left no-margin">金额</span>
+                                                    <span class="databox-text sonic-silver pull-right no-margin uppercase">日期</span>
+                                                </div>
+                                                @foreach (var item in UserDay)
+                                                {
+                                                    <div class="databox-row row-2 bordered-bottom bordered-ivory padding-10">
+                                                        <span class="badge badge-yellow badge-empty pull-left margin-5"></span>
+                                                        <span class="databox-text darkgray pull-left no-margin hidden-xs">@Html.DisplayFor(modelItem => item.total)</span>
+                                                        <span class="databox-text darkgray pull-right no-margin uppercase">@Html.DisplayFor(modelItem => item.dt)</span>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>                                    
+                                </div>
+                                @*<div class="well with-header">
+                                    <div class="header bordered-blue">个人资金每日汇总</div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    用户名
+                                                </th>
+                                                <th>
+                                                    金额
+                                                </th>
+                                                <th>
+                                                    日期
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in UserDay)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.id)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.user_name)
+                                                    </td>
+                                                    <td class="active">
+                                                        @Html.DisplayFor(modelItem => item.total)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.dt)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>*@
+
+                                <div class="well with-header">
+                                    <div class="header bordered-pink">个人资金每日分类汇总</div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Id
+                                                </th>
+                                                <th>
+                                                    用户名
+                                                </th>
+                                                <th>
+                                                    财务科目
+                                                </th>
+                                                <th>
+                                                    金额
+                                                </th>
+                                                <th>
+                                                    日期
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in UserSubjectDay)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.id)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.user_name)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.subject_name)
+                                                    </td>
+                                                    <td class="active">
+                                                        @Html.DisplayFor(modelItem => item.total)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.dt)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+@section scripts{
+
+<script src="~/Scripts/highcharts.js"></script>
+<script src="~/Scripts/exporting.js"></script>
+<script type="text/javascript">
+    /**
+ * Grid theme for Highcharts JS
+ * author Torstein Honsi
+ */
+
+    Highcharts.theme = {
+        colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+        chart: {
+            //backgroundColor: {
+            //    linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+            //    stops: [
+            //        [0, 'rgb(255, 255, 255)'],
+            //        [1, 'rgb(240, 240, 255)']
+            //    ]
+            //},
+            //borderWidth: 0,
+            //plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+            //plotShadow: true,
+            //plotBorderWidth: 1
+        },
+        title: {
+            style: {
+                color: '#000',
+                font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+            }
+        },
+        subtitle: {
+            style: {
+                color: '#666666',
+                font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+            }
+        },
+        xAxis: {
+            gridLineWidth: 1,
+            lineColor: '#000',
+            tickColor: '#000',
+            labels: {
+                style: {
+                    color: '#000',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                }
+            },
+            title: {
+                style: {
+                    color: '#333',
+                    fontWeight: 'bold',
+                    fontSize: '12px',
+                    fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+
+                }
+            }
+        },
+        yAxis: {
+            minorTickInterval: 'auto',
+            lineColor: '#000',
+            lineWidth: 1,
+            tickWidth: 1,
+            tickColor: '#000',
+            labels: {
+                style: {
+                    color: '#000',
+                    font: '11px Trebuchet MS, Verdana, sans-serif'
+                }
+            },
+            title: {
+                style: {
+                    color: '#333',
+                    fontWeight: 'bold',
+                    fontSize: '12px',
+                    fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+                }
+            }
+        },
+        legend: {
+            itemStyle: {
+                font: '9pt Trebuchet MS, Verdana, sans-serif',
+                color: 'black'
+
+            },
+            itemHoverStyle: {
+                color: '#039'
+            },
+            itemHiddenStyle: {
+                color: 'gray'
+            }
+        },
+        labels: {
+            style: {
+                color: '#99b'
+            }
+        },
+
+        navigation: {
+            buttonOptions: {
+                theme: {
+                    stroke: '#CCCCCC'
+                }
+            }
+        }
+    };
+
+
+    $(document).ready(function () {
+        // Apply the theme
+        var highchartsOptions = Highcharts.setOptions(Highcharts.theme);
+
+        var dataf1 = new Array();
+        var datau1 = new Array();
+        var objf1=@Html.Raw(Json.Encode(Family));
+        for(var i=0;i<objf1.length;i++)
+        {
+            dataf1.push({ name:objf1[i].subject_name,y:Math.abs(objf1[i].total)})
+        }
+        var obju1=@Html.Raw(Json.Encode(User));
+        for(var i=0;i<obju1.length;i++)
+        {
+            datau1.push({ name:obju1[i].subject_name,y:Math.abs(obju1[i].total)})
+        }
+        chartbar("containerf1",dataf1,"家庭资金概览");
+        chartbar("containeru1",datau1,"个人资金概览");
+
+        var dataf2 = new Array();
+        var datau2 = new Array();
+        var objf2=@Html.Raw(Json.Encode(FamilyDay));
+        var list3=new Array(); 
+        for(var i=0;i<objf2.length;i++)
+        {
+            var temp=new Array(); 
+            var y= objf2[i].dt.substr(0,4);//yyyy-mm-dd
+            var m= objf2[i].dt.substr(5,2);
+            var d= objf2[i].dt.substr(8,2);           
+            temp.push(Date.UTC(y,m-1,d-1));
+            temp.push(objf2[i].total);
+            list3.push(temp);
+        }
+        dataf2.push({ name:'家庭每日资产',data:list3});
+
+        var obju2=@Html.Raw(Json.Encode(UserDay));
+        var list4=new Array(); 
+        for(var i=0;i<obju2.length;i++)
+        {
+            var temp2=new Array(); 
+            var y2= obju2[i].dt.substr(0,4);//yyyy-mm-dd
+            var m2= obju2[i].dt.substr(5,2);
+            var d2= obju2[i].dt.substr(8,2);           
+            temp2.push(Date.UTC(y2,m2-1,d2-1));
+            temp2.push(obju2[i].total);
+            list4.push(temp2);
+        }
+        datau2.push({ name:'个人每日资产',data:list4});
+      
+        chartline("containerf2",dataf2,"家庭资金每日汇总");
+        chartline("containeru2",datau2,"个人资金每日汇总");
+    });
+    function chartbar(id,data,title) {
+        // Build the chart
+        $('#'+id).highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: title
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            },
+            series: [{
+                name: "金额",
+                colorByPoint: true,
+                data: data
+            }]
+        });
+    }
+    function chartline(id,data,title)
+    {
+        $('#'+id).highcharts({
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: title
+            },            
+            xAxis: {
+                type: 'datetime',
+                labels: {  
+                    step: 1,   
+                    formatter: function () {  
+                        return Highcharts.dateFormat('%m-%d', this.value);  
+                    }  
+                }  
+            },
+            yAxis: {
+                title: {
+                    text: '资产'
+                },
+                min: null,
+                startOnTick: false
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br>'+
+                    Highcharts.dateFormat('%Y-%m-%d', this.x) +': '+ this.y;
+                }
+            },
+            series: data 
+        });
+    }
+</script>
+    }

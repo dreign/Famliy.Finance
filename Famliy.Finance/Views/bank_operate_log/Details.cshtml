@@ -1,0 +1,145 @@
+﻿@model Famliy.Finance.Models.bank_operate_log
+
+@{
+    ViewBag.Title = "资金明细";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="well with-header">
+            <div class="header bordered-sky">
+                详细
+            </div>
+
+            <div>
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.sys_subject.subject_name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.sys_subject.subject_name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.user_id)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.user_id)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.user_name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.user_name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.money)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.money)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.history_total)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.history_total)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.subject_remark)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.subject_remark)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.order_id)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.order_id)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.product_name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.product_name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.product_number)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.product_number)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.order_amount)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.order_amount)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.pay_way)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.pay_way)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.remark)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.remark)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.create_date)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.create_date)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.modify_date)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.modify_date)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.status)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.status)
+                    </dd>
+
+                </dl>
+            </div>
+            <p>
+                @Html.ActionLink("编辑", "Edit", new { id = Model.id }) |
+                @Html.ActionLink("返回列表", "Index")
+            </p>
+        </div>
+    </div>
+</div>
